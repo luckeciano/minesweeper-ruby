@@ -14,9 +14,9 @@ class MinesweeperModel < ModelInterface
         return @width
     end
         
-        def get_height
-            return @height
-        end
+    def get_height
+        return @height
+    end
         
     def get_state(row, column)
         return @board[row][column]
