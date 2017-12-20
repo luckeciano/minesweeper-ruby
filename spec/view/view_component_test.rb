@@ -18,11 +18,11 @@ end
 def initialize_and_print_list_test()
     puts 'Test: Initialize and Print List'
     game_view = MinesweeperListView.new
-    model = MinesweeperModel.new(5, 8)
+    model = MinesweeperModel.new(5, 8, 3)
     model.fill_state('F', 2, 5)
     model.fill_state('.', 3, 1)
-    model.fill_state('#', 0, 0)
-    model.fill_state('#', 3, 7)
+    model.fill_state('F', 0, 0)
+    model.fill_state(' ', 3, 7)
     
     game_view.print_list(model.get_bombs, model.get_flags, model.get_unknown_cells, model.get_clear_cells)
 end

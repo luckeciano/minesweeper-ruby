@@ -1,9 +1,11 @@
 require_relative 'model_interface'
+require 'set'
 class MinesweeperModel < ModelInterface
-
-    def initialize(width, height)
+    #OBS: State = [Element, isKnow], where Element = {'F', '#', ' '}
+    def initialize(width, height, num_bombs)
         @width, @height = width, height
-        @board = Array.new(width) {Array.new(height)}
+        @board = Array.new(width) {Array.new(height, '.')}
+        @bombs = generate_bombs(width, height, num_bombs)
     end
     
     def fill_state(state, row, column)
@@ -27,23 +29,14 @@ class MinesweeperModel < ModelInterface
     end
     
     def get_bombs()
-        bombs = []
-        @board.each_with_index do |x, xi|
-          x.each_with_index do |y, yi|
-            if @board[xi][yi] == '#'
-                bombs.push([xi, yi])
-            end
-          end
-        end 
-        
-        return bombs
+        return @bombs
     end
     
     def get_flags()
         flags = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi] == 'F'
+            if @board[xi][yi][0] == 'F'
                 flags.push([xi, yi])
             end
           end
@@ -55,7 +48,7 @@ class MinesweeperModel < ModelInterface
         unk_cells = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi] == '.'
+            if @board[xi][yi][0] == '.'
                 unk_cells.push([xi, yi])
             end
           end
@@ -67,12 +60,33 @@ class MinesweeperModel < ModelInterface
         clr_cells = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi] == ' '
+            if @board[xi][yi][0] == ' '
                 clr_cells.push([xi, yi])
             end
           end
         end 
         return clr_cells 
     end
+    
+    def board_state (controller, xray = false)
+        if xray && controller.is_still_playing()
+            final_board = fill_bombs_in_board()
+            return final_board
+        else return @board
+        end
+    end
+            
+    
+    def generate_bombs(width, height, num_bombs)
+        bombs = Set.new()
+        while bombs.length < num_bombs
+            x = rand(0...width)
+            y = rand(0...height)
+            bombs.add([x,y])
+        end
+        return bombs
+    end
+    
+    private :generate_bombs
         
 end
