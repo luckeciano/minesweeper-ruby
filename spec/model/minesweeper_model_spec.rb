@@ -23,4 +23,10 @@ describe MinesweeperModel do
         arr[4][4] = State::CLEAR_CELL
         expect(@model.get_board).to eq arr
     end
+    
+    it "test board state" do
+        expect(@model.board_state(false, false)).to eq @model.get_board
+        expect(@model.board_state(true, true)).to eq @model.get_board
+        expect(@model.board_state(false, true)).not_to eq @model.get_board
+    end
 end
