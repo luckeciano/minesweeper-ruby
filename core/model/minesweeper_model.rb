@@ -144,11 +144,6 @@ class MinesweeperModel < ModelInterface
         return @bombs.include?([x,y])
     end
     
-    def update_board(board)
-        @board = board
-    end
-    
-    
     def fill_bombs_in_board()
         new_board = @board.map(&:clone)
         @bombs.each do |element|

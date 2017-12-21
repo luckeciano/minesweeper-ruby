@@ -29,4 +29,11 @@ describe MinesweeperModel do
         expect(@model.board_state(true, true)).to eq @model.get_board
         expect(@model.board_state(false, true)).not_to eq @model.get_board
     end
+    
+    it "test wrong input" do
+        expect(@model.has_bomb(-1, -1)).to eq false
+        expect(@model.has_flag(-1, -5)).to eq false
+        expect(@model.has_clear_cell(-3, -4)).to eq false
+        expect(@model.has_unknown_cell(100, 100)).to eq false
+    end
 end
