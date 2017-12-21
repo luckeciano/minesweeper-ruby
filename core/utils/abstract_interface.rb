@@ -1,3 +1,7 @@
+#Module of Abstract Interface,
+#used for create all interfaces
+#used in this project
+
 module AbstractInterface
     
     class InterfaceNotImplementedError < NoMethodError

@@ -1,3 +1,9 @@
+#End-to-end test:
+# An "integration" test which
+# shows the execution of the minesweeper game.
+#
+#Author:: Luckeciano(mailto:luckeciano@gmail.com)
+
 require_relative '../../core/main/game_factory.rb'
 require_relative '../../core/view/minesweeper_board_view.rb'
 require_relative '../../core/view/minesweeper_list_view.rb'

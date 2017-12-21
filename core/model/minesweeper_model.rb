@@ -1,3 +1,12 @@
+#Minesweeper Model: data holder of
+#minesweeper game.
+#
+#Author:: Luckeciano(mailto:luckeciano@gmail.com)
+
+
+#Module State: Identify the possible states
+#inside a minesweeper board. The representation
+#of each state can be changed here.
 module State
     UNKNOWN_CELL = '.'
     CLEAR_CELL = 'O'
@@ -8,6 +17,8 @@ end
 require_relative 'model_interface'
 require 'set'
 class MinesweeperModel < ModelInterface
+    
+    #Default constructor of MinesweeperModel
     def initialize(width, height, num_bombs, bombs_list = nil)
         @width, @height = width, height
         @board = Array.new(width) {Array.new(height, State::UNKNOWN_CELL)}
@@ -18,11 +29,13 @@ class MinesweeperModel < ModelInterface
         end
     end
         
-    
+    #Set the state of specific coordinates
+    #in the board.
     def fill_state(state, row, column)
         @board[row][column] = state
     end
     
+    #Data getters
     def get_width
         return @width
     end
@@ -100,6 +113,8 @@ class MinesweeperModel < ModelInterface
         return bombs
     end
     
+    #Auxiliar function for check input from the user
+    #and avoid input outside range
     def check_input(x, y)
         if x < 0 || x >= @width || y < 0 || y >= @height
             return false

@@ -1,3 +1,5 @@
+#Script for play minesweeper
+
 require_relative 'game_factory'
 
 

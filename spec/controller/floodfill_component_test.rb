@@ -1,3 +1,8 @@
+#Floodfill component test:
+#test for evaluate floodfill behavior
+#
+#Author:: Luckeciano(mailto:luckeciano@gmail.com)
+
 require_relative '../../core/controller/minesweeper_controller.rb'
 require_relative '../../core/model/minesweeper_model.rb'
 require_relative '../../core/view/minesweeper_board_view.rb'

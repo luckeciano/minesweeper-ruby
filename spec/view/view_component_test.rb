@@ -1,3 +1,8 @@
+#View component test:
+#Aim to test the printing methods from the views
+#
+#Author:: Luckeciano(mailto:luckeciano@gmail.com)
+
 require_relative '../../core/view/minesweeper_board_view.rb'
 require_relative '../../core/model/minesweeper_model.rb'
 require_relative '../../core/view/minesweeper_list_view.rb'
