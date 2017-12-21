@@ -7,12 +7,12 @@ class MinesweeperBoardView < ViewInterface
     
     def print_model_state(model, still_playing, xray = false)
         arr = model.board_state(still_playing, xray)
-        print_board(arr, model.get_width)
+        print_board(arr)
         
     end
     
-    def print_board (arr, width)
-        puts arr.map { |a| a.map { |i| i.to_s.rjust(width) }.join }
+    def print_board (arr)
+        puts arr.map { |a| a.map { |i| i.to_s.rjust(3) }.join }
     end
         
 end

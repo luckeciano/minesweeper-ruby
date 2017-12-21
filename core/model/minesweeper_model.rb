@@ -47,7 +47,7 @@ class MinesweeperModel < ModelInterface
         flags = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi][0] == State::FLAG_CELL
+            if @board[xi][yi] == State::FLAG_CELL
                 flags.push([xi, yi])
             end
           end
@@ -59,7 +59,7 @@ class MinesweeperModel < ModelInterface
         unk_cells = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi][0] == State::UNKNOWN_CELL
+            if @board[xi][yi] == State::UNKNOWN_CELL
                 unk_cells.push([xi, yi])
             end
           end
@@ -71,7 +71,9 @@ class MinesweeperModel < ModelInterface
         clr_cells = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi][0] == State::CLEAR_CELL
+            if @board[xi][yi] != State::UNKNOWN_CELL &&
+            @board[xi][yi] != State::BOMB_CELL &&
+            @board[xi][yi] != State::FLAG_CELL
                 clr_cells.push([xi, yi])
             end
           end
@@ -80,7 +82,7 @@ class MinesweeperModel < ModelInterface
     end
     
     def board_state (still_playing, xray = false)
-        if xray && still_playing
+        if xray && !still_playing
             final_board = fill_bombs_in_board()
             return final_board
         else return @board
@@ -130,9 +132,7 @@ class MinesweeperModel < ModelInterface
         if check_input(x, y) == false
             return false
         end
-        if @board[x][y] == State::CLEAR_CELL
-            return true
-        elsif @board[x][y] != State::UNKNOWN_CELL &&
+        if @board[x][y] != State::UNKNOWN_CELL &&
             @board[x][y] != State::BOMB_CELL &&
             @board[x][y] != State::FLAG_CELL
             return true
