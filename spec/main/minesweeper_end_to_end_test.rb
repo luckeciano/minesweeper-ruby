@@ -2,7 +2,7 @@ require_relative '../../core/main/game_factory.rb'
 require_relative '../../core/view/minesweeper_board_view.rb'
 require_relative '../../core/view/minesweeper_list_view.rb'
 
-def main()
+def end_to_end()
     width, height, num_mines = 10, 20, 50
     game_factory = GameFactory.new
     minesweeper = game_factory.new_minesweeper_game(width, height, num_mines)
@@ -19,7 +19,7 @@ def main()
         if valid_flag
             puts 'Flagged on ' << x.to_s << " " << y.to_s
         end
-        if valid_flag or valid_flag
+        if valid_move or valid_flag
             game_view = (rand > 0.5) ? MinesweeperBoardView.new : MinesweeperListView.new
             minesweeper.set_view(game_view)
             minesweeper.board_state()
@@ -36,4 +36,4 @@ def main()
     end
 end
 
-main()
+end_to_end()
