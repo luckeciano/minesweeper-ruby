@@ -6,7 +6,6 @@ require_relative 'game_factory'
 def main()
     puts 'Width, height, number of bombs:'
     width, height, number_of_bombs = $stdin.read.split
-    puts 'New game with board of ' << width << ', ' << height << ' and ' << number_of_bombs << ' bombs.' 
     
     game_factory = GameFactory.new
     minesweeper = game_factory.new_minesweeper_game(width.to_i, height.to_i, number_of_bombs.to_i)
