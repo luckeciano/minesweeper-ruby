@@ -9,8 +9,10 @@ This code implements a minesweeper in Ruby in a flexible way for platforms. It's
 
 # Design
 
-The architecture of the project can be viewd below:
+The architecture of the project can be viewd below. This UML doesn't show all the methods. It aims to show the
+relationship of the classes:
 
+![Architecture](https://github.com/luckeciano/minesweeper-ruby/blob/master/minesweeper_design.png)
 
 It's based in a Factory of Builders. The Minesweeper is implemented in MVC.
 
