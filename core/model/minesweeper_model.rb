@@ -1,12 +1,23 @@
+module State
+    UNKNOWN_CELL = '.'
+    CLEAR_CELL = 'O'
+    BOMB_CELL = '#'
+    FLAG_CELL = 'F'
+end
+
 require_relative 'model_interface'
 require 'set'
 class MinesweeperModel < ModelInterface
-    #OBS: State = [Element, isKnow], where Element = {'F', '#', ' '}
-    def initialize(width, height, num_bombs)
+    def initialize(width, height, num_bombs, bombs_list = nil)
         @width, @height = width, height
-        @board = Array.new(width) {Array.new(height, '.')}
-        @bombs = generate_bombs(width, height, num_bombs)
+        @board = Array.new(width) {Array.new(height, State::UNKNOWN_CELL)}
+        if bombs_list == nil
+            @bombs = generate_bombs(width, height, num_bombs)
+        else
+            @bombs = bombs_list
+        end
     end
+        
     
     def fill_state(state, row, column)
         @board[row][column] = state
@@ -36,7 +47,7 @@ class MinesweeperModel < ModelInterface
         flags = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi][0] == 'F'
+            if @board[xi][yi][0] == State::FLAG_CELL
                 flags.push([xi, yi])
             end
           end
@@ -48,7 +59,7 @@ class MinesweeperModel < ModelInterface
         unk_cells = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi][0] == '.'
+            if @board[xi][yi][0] == State::UNKNOWN_CELL
                 unk_cells.push([xi, yi])
             end
           end
@@ -60,7 +71,7 @@ class MinesweeperModel < ModelInterface
         clr_cells = []
         @board.each_with_index do |x, xi|
           x.each_with_index do |y, yi|
-            if @board[xi][yi][0] == ' '
+            if @board[xi][yi][0] == State::CLEAR_CELL
                 clr_cells.push([xi, yi])
             end
           end
@@ -68,8 +79,8 @@ class MinesweeperModel < ModelInterface
         return clr_cells 
     end
     
-    def board_state (controller, xray = false)
-        if xray && controller.is_still_playing()
+    def board_state (still_playing, xray = false)
+        if xray && still_playing
             final_board = fill_bombs_in_board()
             return final_board
         else return @board
@@ -87,6 +98,67 @@ class MinesweeperModel < ModelInterface
         return bombs
     end
     
-    private :generate_bombs
+    def check_input(x, y)
+        if x < 0 || x >= @width || y < 0 || y >= @height
+            return false
+        end
+        return true
+    end    
+    
+    
+    def has_flag(x, y)
+        if check_input(x, y) == false
+            return false
+        end
+        if @board[x][y] == State::FLAG_CELL
+            return true
+        end
+        return false
+    end
+    
+    def has_unknown_cell(x, y)
+        if check_input(x, y) == false
+            return false
+        end
+        if @board[x][y] == State::UNKNOWN_CELL
+            return true
+        end
+        return false
+    end
+    
+    def has_clear_cell(x, y)
+        if check_input(x, y) == false
+            return false
+        end
+        if @board[x][y] == State::CLEAR_CELL
+            return true
+        elsif @board[x][y] != State::UNKNOWN_CELL &&
+            @board[x][y] != State::BOMB_CELL &&
+            @board[x][y] != State::FLAG_CELL
+            return true
+        end
+        return false
+    end
+    
+    def has_bomb(x, y)
+        return @bombs.include?([x,y])
+    end
+    
+    def update_board(board)
+        @board = board
+    end
+    
+    
+    def fill_bombs_in_board()
+        new_board = @board.map(&:clone)
+        @bombs.each do |element|
+            x = element[0]
+            y = element[1]
+            new_board[x][y] = State::BOMB_CELL
+        end
+        return new_board
+    end
+    
+    private :generate_bombs, :fill_bombs_in_board, :check_input
         
 end

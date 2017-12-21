@@ -5,12 +5,12 @@ require_relative '../../core/view/minesweeper_list_view.rb'
 def initialize_and_print_board_test()
     puts 'Test: Initialize and Print Board'
     game_view = MinesweeperBoardView.new
-    width, height = 5 , 8
-    board = Array.new(width) {Array.new(height)}
-    board[2][5] = 'F'
-    board[3][1] = '.'
-    board[0][0] = '#'
-    game_view.print_board(board, width)
+    model = MinesweeperModel.new(5, 8, 3)
+    model.fill_state(State::FLAG_CELL, 2, 5)
+    model.fill_state(State::UNKNOWN_CELL, 3, 1)
+    model.fill_state(State::FLAG_CELL, 0, 0)
+    model.fill_state(State::UNKNOWN_CELL, 3, 7)
+    game_view.print_board(model.get_board, model.get_width)
     
 end
 
@@ -19,12 +19,12 @@ def initialize_and_print_list_test()
     puts 'Test: Initialize and Print List'
     game_view = MinesweeperListView.new
     model = MinesweeperModel.new(5, 8, 3)
-    model.fill_state('F', 2, 5)
-    model.fill_state('.', 3, 1)
-    model.fill_state('F', 0, 0)
-    model.fill_state(' ', 3, 7)
+    model.fill_state(State::FLAG_CELL, 2, 5)
+    model.fill_state(State::UNKNOWN_CELL, 3, 1)
+    model.fill_state(State::FLAG_CELL, 0, 0)
+    model.fill_state(State::UNKNOWN_CELL, 3, 7)
     
-    game_view.print_list(model.get_bombs, model.get_flags, model.get_unknown_cells, model.get_clear_cells)
+    game_view.print_model_state(model)
 end
     
 

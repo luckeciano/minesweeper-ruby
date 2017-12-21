@@ -5,9 +5,12 @@ class MinesweeperListView < ViewInterface
     def initialize()
     end
     
-    def print_model_state(model)
-        arr = model.get_board()
-        print_list(model.get_bombs, model.get_flags, model.get_unknown_cells, model.get_clear_cells)
+    def print_model_state(model, xray = false)
+        bombs = []
+        if xray
+            bombs = model.get_bombs
+        end
+        print_list(bombs, model.get_flags, model.get_unknown_cells, model.get_clear_cells)
     end
     
     def print_list (bombs, flags, unknown_cells, clear_cells)

@@ -5,8 +5,8 @@ class MinesweeperBoardView < ViewInterface
     def initialize()
     end
     
-    def print_model_state(model)
-        arr = model.get_board()
+    def print_model_state(model, still_playing, xray = false)
+        arr = model.board_state(still_playing, xray)
         print_board(arr, model.get_width)
         
     end
