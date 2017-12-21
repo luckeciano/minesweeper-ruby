@@ -90,7 +90,7 @@ class MinesweeperController < ControllerInterface
         
     
     def check_game_state(model)
-        if model.get_unknown_cells == model.get_bombs
+        if model.get_unknown_cells.length == model.get_bombs.length
             @still_playing = false
             @victory = true
         end
